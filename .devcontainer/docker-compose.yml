@@ -1,0 +1,17 @@
+services:
+  devcontainer:
+    image: mcr.microsoft.com/devcontainers/base:ubuntu
+    volumes:
+      - ../..:/workspaces/shortsmaker:cached
+      - ${HOME}/.ssh:/home/vscode/.ssh:ro
+      - /var/run/docker.sock:/var/run/docker.sock
+    privileged: true
+    environment:
+      - GIT_SSH_COMMAND=ssh -i /home/vscode/.ssh/lsilvpin_id_rsa
+    command: sleep infinity
+    networks:
+      - shortsmaker_network
+
+networks:
+  shortsmaker_network:
+    external: true

@@ -1,0 +1,13 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "/ai/script"
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": "{\"script\": \"Este é um roteiro gerado pela IA simulada.\", \"status\": \"success\"}"
+  }
+}

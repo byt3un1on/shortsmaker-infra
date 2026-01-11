@@ -1,0 +1,46 @@
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: shortsmaker-postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: shortsmaker
+    volumes:
+      - ./manifests/postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - shortsmaker-network
+
+  minio:
+    image: minio/minio
+    container_name: shortsmaker-minio
+    ports:
+      - "9010:9000"
+      - "9011:9001"
+    environment:
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadmin
+    command: server /data --console-address ":9001"
+    volumes:
+      - minio_data:/data
+    networks:
+      - shortsmaker-network
+
+  wiremock:
+    image: wiremock/wiremock:latest
+    container_name: shortsmaker-wiremock
+    ports:
+      - "8081:8080"
+    volumes:
+      - ./manifests/wiremock/mappings:/home/wiremock/mappings
+    networks:
+      - shortsmaker-network
+
+volumes:
+  minio_data:
+
+networks:
+  shortsmaker-network:
+    driver: bridge
