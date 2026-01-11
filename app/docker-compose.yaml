@@ -2,8 +2,6 @@ services:
   postgres:
     image: postgres:15-alpine
     container_name: shortsmaker-postgres
-    ports:
-      - "5432:5432"
     environment:
       POSTGRES_USER: user
       POSTGRES_PASSWORD: password
@@ -17,8 +15,8 @@ services:
     image: minio/minio
     container_name: shortsmaker-minio
     ports:
-      - "9010:9000"
-      - "9011:9001"
+      - "39000:9000"
+      - "39001:9001"
     environment:
       MINIO_ROOT_USER: minioadmin
       MINIO_ROOT_PASSWORD: minioadmin
@@ -32,14 +30,33 @@ services:
     image: wiremock/wiremock:latest
     container_name: shortsmaker-wiremock
     ports:
-      - "8081:8080"
+      - "38081:8080"
     volumes:
       - ./manifests/wiremock/mappings:/home/wiremock/mappings
     networks:
       - shortsmaker-network
 
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: shortsmaker-pgadmin
+    ports:
+      - "35050:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@shortsmaker.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+      PGADMIN_SERVER_JSON_FILE: /pgadmin4/servers.json
+      PGADMIN_CONFIG_MASTER_PASSWORD_REQUIRED: 'False'
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+      - ./manifests/pgadmin/provisioning/servers.json:/pgadmin4/servers.json
+    networks:
+      - shortsmaker-network
+    depends_on:
+      - postgres
+
 volumes:
   minio_data:
+  pgadmin_data:
 
 networks:
   shortsmaker-network:

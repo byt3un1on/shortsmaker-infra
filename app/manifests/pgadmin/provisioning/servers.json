@@ -1,0 +1,15 @@
+{
+  "Servers": {
+    "1": {
+      "Name": "ShortsMaker DB",
+      "Group": "Servers",
+      "Host": "postgres",
+      "Port": 5432,
+      "MaintenanceDB": "shortsmaker",
+      "Username": "user",
+      "Password": "password",
+      "SSLMode": "prefer"
+    }
+  }
+}
+

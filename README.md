@@ -7,6 +7,7 @@ Este repositório contém os manifestos para os serviços de infraestrutura do s
 - **Postgres:** Banco de dados relacional.
 - **Minio:** Object Storage (S3 compatível) para armazenar arquivos de mídia.
 - **Wiremock:** Simulador de APIs para as IAs de roteiro e vídeo.
+- **pgAdmin:** Interface administrativa para o banco de dados Postgres.
 
 ## Como rodar
 
